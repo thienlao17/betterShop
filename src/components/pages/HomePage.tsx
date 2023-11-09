@@ -1,30 +1,14 @@
 'use client'
 
-import ky from 'ky'
-import { useQuery } from 'react-query'
-
-import { ProductType } from '@/shared/ProductType'
+import HomeCategories from '@/components/layout/HomeCategories'
 
 export default function HomePage() {
-  const { data, isLoading, isError } = useQuery<ProductType[]>(
-    'product',
-    async (): Promise<ProductType[]> =>
-      ky
-        .get('https://localhost:7056/api/Product/GetProducts')
-        .json<ProductType[]>()
-  )
-  if (isLoading) return <p>Is Loading</p>
-  if (isError) return <p>Can not fetch data</p>
   return (
-    <div>
-      <p>Product list</p>
-      <ul>
-        {data?.map((item) => (
-          <li key={item.id}>
-            <p>{item.name}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="mt-5 grid h-full  w-full  grid-cols-[200px_1fr] grid-rows-1 gap-5 px-32">
+      <div className="h-full w-full ">
+        <HomeCategories />
+      </div>
+      <div className="h-full w-full">Second</div>
     </div>
   )
 }
