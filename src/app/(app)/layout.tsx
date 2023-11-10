@@ -4,7 +4,7 @@ import MainHeader from '@/components/layout/MainHeader'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col">
+    <div className="relative flex h-screen w-full flex-col">
       <MainHeader />
       <main className="mx-auto flex h-full w-full max-w-screen-2xl grow">
         {children}
