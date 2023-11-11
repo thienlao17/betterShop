@@ -11,8 +11,13 @@
     "format": "prettier src --write"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.17",
     "ky": "^1.1.3",
+    "mui": "^0.0.1",
     "next": "^14.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

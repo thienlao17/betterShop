@@ -1,5 +1,6 @@
 'use client'
 
+import HomeBanners from '@/components/layout/HomeBanners'
 import HomeCategories from '@/components/layout/HomeCategories'
 
 export default function HomePage() {
@@ -8,7 +9,9 @@ export default function HomePage() {
       <div className="h-full w-full ">
         <HomeCategories />
       </div>
-      <div className="h-full w-full">Second</div>
+      <div className="h-full w-full">
+        <HomeBanners />
+      </div>
     </div>
   )
 }

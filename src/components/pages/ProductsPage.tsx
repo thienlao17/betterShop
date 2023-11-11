@@ -1,21 +1,20 @@
 'use client'
 
+import Link from 'next/link'
 import { useQuery } from 'react-query'
 import ky from 'ky'
+
 import { ProductType } from '@/shared/ProductType'
-import Link from 'next/link'
 import Button from '@mui/material/Button'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
 
-export default function CategoryPage({ categoryId }: { categoryId: number }) {
+export default function ProductsPage() {
   const { data, isLoading, isError } = useQuery<ProductType[]>(
     'product',
     async (): Promise<ProductType[]> =>
       ky
-        .get(
-          `https://localhost:7056/api/Product/GetProductsByCategory/${categoryId}`
-        )
+        .get('https://localhost:7056/api/Product/GetProducts')
         .json<ProductType[]>()
   )
   if (isLoading) return <p>Is Loading</p>
@@ -28,7 +27,7 @@ export default function CategoryPage({ categoryId }: { categoryId: number }) {
         </Button>
       </Link>
       <h1 className=" py-3 text-2xl font-extrabold text-neutral-900">
-        Продукты в категории {categoryId}:
+        Продукты:
       </h1>
       <ul className="mt-0.5 flex w-full flex-wrap items-center justify-center gap-10">
         {data?.map((item) => (

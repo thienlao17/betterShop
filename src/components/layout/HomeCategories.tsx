@@ -17,12 +17,15 @@ export default function HomeCategories() {
   if (isLoading) return <p>Is Loading</p>
   if (isError) return <p>Can not fetch data</p>
   return (
-    <div className="h-4/5 rounded-2xl bg-blue-100 p-5">
-      <p className="text-xl font-bold">Категории:</p>
+    <div className="h-full rounded-2xl bg-neutral-900 p-5">
+      <p className="text-xl font-bold text-neutral-200">Категории:</p>
       <ul className="mt-0.5 flex flex-col gap-2">
         {data?.map((item) => (
           <li key={item.id}>
-            <Link href={`/categories/${item.id}`} className="font-bold">
+            <Link
+              href={`/category/${item.id}`}
+              className="font-bold text-neutral-200"
+            >
               {item.name}
             </Link>
           </li>
