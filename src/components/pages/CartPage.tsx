@@ -39,7 +39,7 @@ export default function CartPage() {
               .post(
                 `https://localhost:7056/api/Order/AddOrder?Id=0&Status=OK&userId=1`,
                 {
-                  json: { postData },
+                  json: { productId: postData },
                 }
               )
               .json()
