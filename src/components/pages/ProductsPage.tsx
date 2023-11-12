@@ -1,17 +1,16 @@
 'use client'
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import Button from '@mui/material/Button'
+import ky from 'ky'
 import Link from 'next/link'
 import { useQuery } from 'react-query'
-import ky from 'ky'
 
 import { ProductType } from '@/shared/ProductType'
-import Button from '@mui/material/Button'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import LocalMallIcon from '@mui/icons-material/LocalMall'
 
 export default function ProductsPage() {
   const { data, isLoading, isError } = useQuery<ProductType[]>(
-    'product',
+    'products',
     async (): Promise<ProductType[]> =>
       ky
         .get('https://localhost:7056/api/Product/GetProducts')
@@ -31,7 +30,7 @@ export default function ProductsPage() {
       </h1>
       <ul className="mt-0.5 flex w-full flex-wrap items-center justify-center gap-10">
         {data?.map((item) => (
-          <Link href={`/product/${item.id}`}>
+          <Link key={item.id} href={`/product/${item.id}`}>
             <li
               key={item.id}
               className="relative flex h-96 w-96 flex-col gap-5 rounded-2xl bg-white p-8 shadow"
@@ -44,19 +43,9 @@ export default function ProductsPage() {
                   backgroundPosition: 'center',
                   backgroundImage: `url(${item.image}`,
                 }}
-              ></div>
+              />
               <h1 className=" rounded-2xl text-2xl font-bold">{item.name}</h1>
               <p className="font-medium">{item.price} руб.</p>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  alert('clicked')
-                }}
-                size="large"
-                startIcon={<LocalMallIcon />}
-              >
-                В корзину
-              </Button>
             </li>
           </Link>
         ))}

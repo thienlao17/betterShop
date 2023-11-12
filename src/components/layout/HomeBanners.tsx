@@ -1,13 +1,13 @@
 'use client'
 
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
+import TaskIcon from '@mui/icons-material/Task'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
 
 import Iphone from '@/images/png.monster-234.webp'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
-import TaskIcon from '@mui/icons-material/Task'
 
 export default function HomeBanners() {
   function saveBooleanToLocalStorage(key: string, value: boolean): void {

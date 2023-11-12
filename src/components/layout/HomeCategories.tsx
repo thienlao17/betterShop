@@ -8,7 +8,7 @@ import { CategoryType } from '@/shared/CategoryType'
 
 export default function HomeCategories() {
   const { data, isLoading, isError } = useQuery<CategoryType[]>(
-    'product',
+    'categories',
     async (): Promise<CategoryType[]> =>
       ky
         .get('https://localhost:7056/api/Category/GetCategories')
