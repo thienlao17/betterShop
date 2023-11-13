@@ -6,11 +6,15 @@ import LocalMallIcon from '@mui/icons-material/LocalMall'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import ky from 'ky'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 
 import CartStore from '@/states/CartStore'
+import toast from 'react-hot-toast'
 
 export default function CartPage() {
-  const { cart, removeProduct, addProduct } = CartStore()
+  const { cart, removeProduct, addProduct, decreaseProduct, clearCart } =
+    CartStore()
 
   const handleRemoveProduct = (productId: number) => {
     removeProduct(productId)
@@ -31,7 +35,6 @@ export default function CartPage() {
           endIcon={<LocalMallIcon />}
           onClick={async () => {
             const postData: number[][] = []
-
             cart.map((item) => {
               postData.push([item.id, item.quantity])
             })
@@ -43,6 +46,9 @@ export default function CartPage() {
                 }
               )
               .json()
+            toast.success('Заказ создан.')
+
+            clearCart()
           }}
         >
           Сделать заказ
@@ -82,7 +88,14 @@ export default function CartPage() {
                     addProduct(item)
                   }}
                 >
-                  <DeleteIcon />
+                  <AddIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    decreaseProduct(item.id)
+                  }}
+                >
+                  <RemoveIcon />
                 </IconButton>
                 <IconButton onClick={() => handleRemoveProduct(item.id)}>
                   <DeleteIcon />

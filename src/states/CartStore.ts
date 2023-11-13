@@ -8,6 +8,8 @@ type CartStoreType = {
   cart: CartItem[]
   addProduct: (product: ProductType) => void
   removeProduct: (productId: number) => void
+  decreaseProduct: (productId: number) => void
+  clearCart: () => void
 }
 
 const getInitialCart = () => {
@@ -40,6 +42,26 @@ const CartStore = create<CartStoreType>((set) => ({
       )
       localStorage.setItem('cart', JSON.stringify(updatedCart))
       return { cart: updatedCart }
+    }),
+  decreaseProduct: (productId) =>
+    set((state) => {
+      const updatedCart = state.cart
+        .map((product) =>
+          product.id === productId
+            ? {
+                ...product,
+                quantity: Math.max(0, product.quantity - 1),
+              }
+            : product
+        )
+        .filter((product) => product.quantity > 0) // Remove products with quantity zero
+      localStorage.setItem('cart', JSON.stringify(updatedCart))
+      return { cart: updatedCart }
+    }),
+  clearCart: () =>
+    set(() => {
+      localStorage.removeItem('cart')
+      return { cart: [] }
     }),
 }))
 

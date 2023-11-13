@@ -2,6 +2,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Link from 'next/link'
+import HeaderFunctions from '@/components/layout/HeaderFunctions'
 
 export default function MainHeader() {
   return (
@@ -13,15 +14,14 @@ export default function MainHeader() {
         <nav className="flex flex-row items-center">
           <ul className="inline-flex items-center space-x-2 md:space-x-4">
             <div>
+              <HeaderFunctions />
+            </div>
+            <div>
               <Link href="/cart">
                 <ShoppingCartIcon />
               </Link>
             </div>
-            <div>
-              <Link href="/functions">
-                <BookmarkIcon />
-              </Link>
-            </div>
+
             <div>
               <Link href="/profile">
                 <AccountBoxIcon />

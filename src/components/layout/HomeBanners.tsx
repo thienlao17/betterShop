@@ -10,24 +10,7 @@ import Link from 'next/link'
 import Iphone from '@/images/png.monster-234.webp'
 
 export default function HomeBanners() {
-  function saveBooleanToLocalStorage(key: string, value: boolean): void {
-    localStorage.setItem(key, String(value))
-  }
-
-  // Получение булевого значения из localStorage
-  function getBooleanFromLocalStorage(key: string): boolean | null {
-    const storedValue = localStorage.getItem(key)
-
-    // Преобразование строкового значения обратно в булево
-    return storedValue !== null ? storedValue === 'true' : null
-  }
-
-  const myBooleanValue = true
-
-  saveBooleanToLocalStorage('isAuthenticated', myBooleanValue)
-
-  const retrievedBooleanValue = getBooleanFromLocalStorage('isAuthenticated')
-  console.log(retrievedBooleanValue)
+  const getBooleanFromLocalStorage = true
   return (
     <div className="grid h-full w-full grid-rows-[1fr_1fr] gap-5">
       <div className="relative h-full w-full overflow-hidden rounded-2xl bg-neutral-900 p-5">
@@ -69,42 +52,36 @@ export default function HomeBanners() {
           </Link>
         </div>
         <div className="h-full w-full rounded-2xl">
-          {getBooleanFromLocalStorage('isAuthenticated') ? (
-            <div className="item flex h-full w-full items-center gap-10">
-              <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
-                <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
-                  Мой профиль
-                </h1>
-                <Link href="/profile" className="font-bold text-neutral-200">
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    startIcon={<PersonOutlineIcon />}
-                  >
-                    Перейти
-                  </Button>
-                </Link>
-              </div>
-              <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
-                <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
-                  Мои заказы
-                </h1>
-                <Link href="/orders" className="font-bold text-neutral-200">
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    startIcon={<TaskIcon />}
-                  >
-                    Перейти
-                  </Button>
-                </Link>
-              </div>
+          <div className="item flex h-full w-full items-center gap-10">
+            <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
+              <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
+                Мой профиль
+              </h1>
+              <Link href="/profile" className="font-bold text-neutral-200">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  startIcon={<PersonOutlineIcon />}
+                >
+                  Перейти
+                </Button>
+              </Link>
             </div>
-          ) : (
-            <div>
-              <h1 className="flex flex-col">Авторизируйся</h1>
+            <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
+              <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
+                Мои заказы
+              </h1>
+              <Link href="/orders" className="font-bold text-neutral-200">
+                <Button
+                  variant="outlined"
+                  size="large"
+                  startIcon={<TaskIcon />}
+                >
+                  Перейти
+                </Button>
+              </Link>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
