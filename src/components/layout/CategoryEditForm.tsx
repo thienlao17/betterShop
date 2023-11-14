@@ -3,6 +3,7 @@
 import ky from 'ky'
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { useMutation, useQueryClient } from 'react-query'
 
 interface CategoryEditFormProps {
   categoryId: number
@@ -17,15 +18,39 @@ export default function CategoryEditForm({
   closeDialog,
 }: CategoryEditFormProps) {
   const { register, handleSubmit } = useForm<FormValues>()
+  const queryClient = useQueryClient()
+
+  // Define the mutation function
+  const updateCategoryMutation = useMutation<void, unknown, FormValues>(
+    async (data) => {
+      await ky
+        .put(`https://localhost:7056/api/Category/UpdateCategory`, {
+          json: { id: categoryId, name: data.name },
+        })
+        .json()
+    },
+    {
+      onSuccess: () => {
+        // Invalidate the 'categories' query to trigger a refetch
+        queryClient.invalidateQueries('categories')
+        closeDialog()
+        toast.success(`Категория изменена`)
+      },
+      onError: (error: unknown) => {
+        toast.error(`Ошибка при изменении категории: ${String(error)}`)
+      },
+    }
+  )
+
+  // Handle form submission
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data)
-    await ky
-      .put(`https://localhost:7056/api/Category/UpdateCategory`, {
-        json: { id: categoryId, name: data.name },
-      })
-      .json()
-    closeDialog()
-    toast.success(`Категория: ${data.name} изменена`)
+    try {
+      // Call the mutation function with form data
+      await updateCategoryMutation.mutateAsync(data)
+    } catch (error) {
+      // Errors are handled by the mutation's onError callback
+      console.error('Error during mutation:', error)
+    }
   }
   const onError = (errs: FieldErrors) => {
     Object.entries(errs).forEach((err) => {

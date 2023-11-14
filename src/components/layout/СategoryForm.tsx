@@ -3,6 +3,7 @@
 import ky from 'ky'
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { useMutation, useQueryClient } from 'react-query'
 
 type FormValues = {
   id: number
@@ -14,14 +15,37 @@ export default function CategoryForm({
   closeDialog: () => void
 }) {
   const { register, handleSubmit } = useForm<FormValues>()
+  const queryClient = useQueryClient()
+
+  // Define the mutation function
+  const addCategoryMutation = useMutation<void, unknown, FormValues>(
+    async (data) => {
+      await ky
+        .post(`https://localhost:7056/api/Category/AddCategory`, {
+          json: { id: 0, name: data.name },
+        })
+        .json()
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('categories')
+        closeDialog()
+        toast.success(`Категория добавлена`)
+      },
+      onError: (error: unknown) => {
+        toast.error(`Ошибка при добавлении категории: ${String(error)}`)
+      },
+    }
+  )
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    await ky
-      .post(`https://localhost:7056/api/Category/AddCategory`, {
-        json: { id: 0, name: data.name },
-      })
-      .json()
-    closeDialog()
-    toast.success(`Категория: ${data.name} добавлена`)
+    try {
+      // Call the mutation function with form data
+      await addCategoryMutation.mutateAsync(data)
+    } catch (error) {
+      // Errors are handled by the mutation's onError callback
+      console.error('Error during mutation:', error)
+    }
   }
   const onError = (errs: FieldErrors) => {
     Object.entries(errs).forEach((err) => {

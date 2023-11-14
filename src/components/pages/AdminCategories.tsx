@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import IconButton from '@mui/material/IconButton'
 import ky from 'ky'
 import toast from 'react-hot-toast'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 import CreateModalEditCategories from '@/components/layout/CreateModalEditCategories'
 import CreateModalCategories from '@/components/layout/CreateModalСategories'
@@ -21,6 +21,27 @@ export default function AdminCategories() {
   )
   if (isLoading) return <p>Is Loading</p>
   if (isError) return <p>Can not fetch data</p>
+  const queryClient = useQueryClient()
+
+  const deleteCategoryMutation = useMutation<void, unknown, number>(
+    async (categoryId) => {
+      await ky.delete(
+        `https://localhost:7056/api/Category/DeleteCategory/${categoryId}`,
+        {
+          json: {},
+        }
+      )
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('categories')
+        toast.success(`Категория удалена.`)
+      },
+      onError: () => {
+        toast.error(`Ошибка при удалении категории.`)
+      },
+    }
+  )
   return (
     <div className="h-full w-full p-5 px-32">
       <div className="mb-5 flex items-center justify-between">
@@ -42,16 +63,8 @@ export default function AdminCategories() {
             <div className="flex gap-5">
               <CreateModalEditCategories categoryId={item.id} />
               <IconButton
-                onClick={async () => {
-                  await ky
-                    .delete(
-                      `https://localhost:7056/api/Category/DeleteCategory/${item.id}`,
-                      {
-                        json: {},
-                      }
-                    )
-                    .json()
-                  toast.success(`Категория ${item.name} удалена.`)
+                onClick={() => {
+                  deleteCategoryMutation.mutate(item.id)
                 }}
               >
                 <DeleteIcon />
