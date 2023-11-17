@@ -11,6 +11,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 
 import CartStore from '@/states/CartStore'
 import toast from 'react-hot-toast'
+import useAuthStore from '@/states/AuthStore'
 
 export default function CartPage() {
   const { cart, removeProduct, addProduct, decreaseProduct, clearCart } =
@@ -19,7 +20,7 @@ export default function CartPage() {
   const handleRemoveProduct = (productId: number) => {
     removeProduct(productId)
   }
-
+  const user = useAuthStore((state) => state.user)
   return (
     <div className=" h-full  w-full p-5 px-32">
       <div className="flex justify-between">
@@ -40,7 +41,7 @@ export default function CartPage() {
             })
             await ky
               .post(
-                `https://localhost:7056/api/Order/AddOrder?Id=0&Status=OK&userId=1`,
+                `https://localhost:7056/api/Order/AddOrder?Id=0&Status=PAYED&userId=${user?.id}`,
                 {
                   json: { productId: postData },
                 }

@@ -4,6 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import AdminOrders from '@/components/pages/AdminOrders'
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ')
@@ -70,21 +71,6 @@ const HeaderFunctions: React.FC = () => (
                   )}
                 >
                   Продукты
-                </Link>
-              </div>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <div>
-                <Link
-                  href="/adminRoles"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Роли
                 </Link>
               </div>
             )}

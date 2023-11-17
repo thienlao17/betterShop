@@ -4,30 +4,24 @@ import { Dialog, Transition } from '@headlessui/react'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 
-import CategoryEditForm from '@/components/layout/CategoryEditForm'
-import IconButton from '@mui/material/IconButton'
-import EditIcon from '@mui/icons-material/Edit'
+import CategoryForm from '@/components/layout/AdminCategories/СategoryForm'
 
-export default function CreateModalEditCategories({
-  categoryId,
-}: {
-  categoryId: number
-}) {
+export default function CreateModalCategories() {
   const [open, setOpen] = useState(false)
   const onModalClose = () => {
     setOpen(false)
   }
   return (
     <>
-      <IconButton
-        onClick={() => {
-          setOpen(true)
-        }}
+      <Button
+        variant="outlined"
+        startIcon={<AddIcon />}
+        onClick={() => setOpen(true)}
       >
-        <EditIcon />
-      </IconButton>
+        Добавить
+      </Button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => onModalClose}>
           <Transition.Child
@@ -64,10 +58,7 @@ export default function CreateModalEditCategories({
                       <CloseIcon />
                     </button>
                   </div>
-                  <CategoryEditForm
-                    closeDialog={onModalClose}
-                    categoryId={categoryId}
-                  />
+                  <CategoryForm closeDialog={onModalClose} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

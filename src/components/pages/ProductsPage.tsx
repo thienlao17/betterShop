@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useQuery } from 'react-query'
 
 import { ProductType } from '@/shared/ProductType'
+import useAuthStore from '@/states/AuthStore'
 
 export default function ProductsPage() {
   const { data, isLoading, isError } = useQuery<ProductType[]>(

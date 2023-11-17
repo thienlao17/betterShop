@@ -4,24 +4,31 @@ import { Dialog, Transition } from '@headlessui/react'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
-import { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 
-import CategoryForm from '@/components/layout/СategoryForm'
+import CategoryEditForm from '@/components/layout/AdminCategories/CategoryEditForm'
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit'
+import ProductEditForm from '@/components/layout/AdminProducts/ProductEditForm'
 
-export default function CreateModalCategories() {
+export default function CreateModalEditProducts({
+  productId,
+}: {
+  productId: number
+}) {
   const [open, setOpen] = useState(false)
   const onModalClose = () => {
     setOpen(false)
   }
   return (
     <>
-      <Button
-        variant="outlined"
-        startIcon={<AddIcon />}
-        onClick={() => setOpen(true)}
+      <IconButton
+        onClick={() => {
+          setOpen(true)
+        }}
       >
-        Добавить
-      </Button>
+        <EditIcon />
+      </IconButton>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => onModalClose}>
           <Transition.Child
@@ -58,7 +65,10 @@ export default function CreateModalCategories() {
                       <CloseIcon />
                     </button>
                   </div>
-                  <CategoryForm closeDialog={onModalClose} />
+                  <ProductEditForm
+                    closeDialog={onModalClose}
+                    productId={productId}
+                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

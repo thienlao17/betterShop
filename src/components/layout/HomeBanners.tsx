@@ -8,9 +8,10 @@ import Button from '@mui/material/Button'
 import Link from 'next/link'
 
 import Iphone from '@/images/png.monster-234.webp'
+import useAuthStore from '@/states/AuthStore'
 
 export default function HomeBanners() {
-  const getBooleanFromLocalStorage = true
+  const user = useAuthStore((state) => state.user)
   return (
     <div className="grid h-full w-full grid-rows-[1fr_1fr] gap-5">
       <div className="relative h-full w-full overflow-hidden rounded-2xl bg-neutral-900 p-5">
@@ -21,13 +22,15 @@ export default function HomeBanners() {
           <h1 className="pb-5  pt-10 text-5xl font-extrabold text-neutral-200">
             IPHONE 15
           </h1>
-          <Button
-            variant="outlined"
-            size="large"
-            endIcon={<ArrowForwardIcon />}
-          >
-            SHOP NOW
-          </Button>
+          <Link href="/products" className="font-bold text-neutral-200">
+            <Button
+              variant="outlined"
+              size="large"
+              endIcon={<ArrowForwardIcon />}
+            >
+              SHOP NOW
+            </Button>
+          </Link>
         </div>
         <div className="absolute  right-0 top-0 h-full w-72">
           <img src={Iphone.src} alt="iphone" className="h-full w-full" />
@@ -51,38 +54,42 @@ export default function HomeBanners() {
             </Button>
           </Link>
         </div>
-        <div className="h-full w-full rounded-2xl">
-          <div className="item flex h-full w-full items-center gap-10">
-            <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
-              <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
-                Мой профиль
-              </h1>
-              <Link href="/profile" className="font-bold text-neutral-200">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  startIcon={<PersonOutlineIcon />}
-                >
-                  Перейти
-                </Button>
-              </Link>
-            </div>
-            <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
-              <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
-                Мои заказы
-              </h1>
-              <Link href="/orders" className="font-bold text-neutral-200">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  startIcon={<TaskIcon />}
-                >
-                  Перейти
-                </Button>
-              </Link>
+        {user ? (
+          <div className="h-full w-full rounded-2xl">
+            <div className="item flex h-full w-full items-center gap-10">
+              <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
+                <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
+                  Мой профиль
+                </h1>
+                <Link href="/profile" className="font-bold text-neutral-200">
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    startIcon={<PersonOutlineIcon />}
+                  >
+                    Перейти
+                  </Button>
+                </Link>
+              </div>
+              <div className="flex h-4/5 w-full flex-col items-center justify-center gap-5 rounded-2xl bg-neutral-900 p-5">
+                <h1 className=" pb-4 text-2xl font-extrabold text-neutral-200">
+                  Мои заказы
+                </h1>
+                <Link href="/userOrders" className="font-bold text-neutral-200">
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    startIcon={<TaskIcon />}
+                  >
+                    Перейти
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <p className="hidden">Пожалуйста, войдите в систему.</p>
+        )}
       </div>
     </div>
   )
