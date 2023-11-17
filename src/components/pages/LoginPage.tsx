@@ -5,6 +5,10 @@ import { useForm } from 'react-hook-form'
 
 import useAuthStore from '@/states/AuthStore'
 import toast from 'react-hot-toast'
+import Button from '@mui/material/Button'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import Link from 'next/link'
+import { useRouter } from 'next/dist/client/components/navigation'
 
 interface LoginForm {
   email: string
@@ -15,11 +19,14 @@ const LoginPage: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginForm>()
 
   const login = useAuthStore((state) => state.login)
+  const router = useRouter()
 
   const onSubmit = async (data: LoginForm) => {
     try {
       await login(data.email, data.password)
       toast.success('Вы успешно вошли')
+
+      router.push('/')
     } catch (error) {
       console.error('Authentication failed:', error)
     }
@@ -57,6 +64,11 @@ const LoginPage: React.FC = () => {
             >
               Войти
             </button>
+            <div className="mt-5 flex items-center justify-center">
+              <Link href="/registration" className="font-bold text-neutral-900">
+                <Button variant="outlined">Регистрация</Button>
+              </Link>
+            </div>
           </form>
         </div>
       </div>
